@@ -1,24 +1,22 @@
-# 6. Modules
+# Глава 2. Модули
 
-**Рассказать про модули и пакеты и как их использовать.**
+Объявленные функции и переменные при выходе из интерпретатора Python и повторном входе будут потеряны. Поэтому, если вы хотите написать более длинную программу, вам лучше использовать текстовый редактор, чтобы подготовить ввод для интерпретатора и запустить его с этим файлом в качестве ввода. Это известно как создание *скрипта*. По мере увеличения объема программы, вы можете разделить ее на несколько файлов. Вы также можете использовать удобную функцию, написанную в нескольких программах, без копирования ее определения в каждую программу.
 
-If you quit from the Python interpreter and enter it again, the definitions you have made (functions and variables) are lost. Therefore, if you want to write a somewhat longer program, you are better off using a text editor to prepare the input for the interpreter and running it with that file as input instead. This is known as creating a *script*. As your program gets longer, you may want to split it into several files for easier maintenance. You may also want to use a handy function that you’ve written in several programs without copying its definition into each program.
+Для поддержки этого в Python есть способ поместить определения в файл и использовать их в скрипте или в интерактивном экземпляре интерпретатора. Такой файл называется *модуль*; определения из модуля могут быть *импортированы* в другие модули или в *основной* модуль (набор переменных, к которым у вас есть доступ в скрипте, выполняемом на верхнем уровне и в режиме калькулятора).
 
-To support this, Python has a way to put definitions in a file and use them in a script or in an interactive instance of the interpreter. Such a file is called a *module*; definitions from a module can be *imported* into other modules or into the *main* module (the collection of variables that you have access to in a script executed at the top level and in calculator mode).
-
-A module is a file containing Python definitions and statements. The file name is the module name with the suffix `.py` appended. Within a module, the module’s name (as a string) is available as the value of the global variable `__name__`. For instance, use your favorite text editor to create a file called `fibo.py` in the current directory with the following contents:
+Модуль - это файл, содержащий определения и операторы Python. Имя файла - это имя модуля с добавленнием `.py`. Внутри модуля имя модуля (в виде строки) доступно как значение глобальной переменной `__name__`. Например, используйте ваш любимый текстовый редактор, чтобы создать файл с именем `fibo.py` в текущем каталоге со следующим содержимым:
 
 ```
-# Fibonacci numbers module
+# Модуль чисел Фибоначчи
 
-def fib(n):    # write Fibonacci series up to n
+def fib(n):    # вывод ряда Фибоначчи до n
     a, b = 0, 1
     while a < n:
         print(a, end=' ')
         a, b = b, a+b
     print()
 
-def fib2(n):   # return Fibonacci series up to n
+def fib2(n):   # возвращает ряд Фибоначчи до n
     result = []
     a, b = 0, 1
     while a < n:
@@ -27,7 +25,7 @@ def fib2(n):   # return Fibonacci series up to n
     return result
 ```
 
-Now enter the Python interpreter and import this module with the following command:
+Теперь войдите в интерпретатор Python и импортируйте этот модуль с помощью следующей команды:
 
 \>>>
 
@@ -35,7 +33,7 @@ Now enter the Python interpreter and import this module with the following comma
 >>> import fibo
 ```
 
-This does not enter the names of the functions defined in `fibo` directly in the current symbol table; it only enters the module name `fibo` there. Using the module name you can access the functions:
+Это не вводит имена функций, определенных в `fibo`, непосредственно в текущей таблице символов; он вводит только имя модуля `fibo`. Используя имя модуля, вы можете получить доступ к функциям:
 
 \>>>
 
@@ -48,7 +46,7 @@ This does not enter the names of the functions defined in `fibo` directly in the
 'fibo'
 ```
 
-If you intend to use a function often you can assign it to a local name:
+Если вы собираетесь использовать функцию часто, вы можете присвоить ее локальному имени:
 
 \>>>
 
@@ -60,15 +58,15 @@ If you intend to use a function often you can assign it to a local name:
 
 
 
-## 6.1. More on Modules
+## 2.1. Подробнее о модулях
 
-A module can contain executable statements as well as function definitions. These statements are intended to initialize the module. They are executed only the *first* time the module name is encountered in an import statement. [1](https://docs.python.org/3/tutorial/modules.html#id2) (They are also run if the file is executed as a script.)
+Модуль может содержать исполняемые операторы, а также определения функций. Эти операторы предназначены для инициализации модуля. Эти операторы предназначены для инициализации модуля. Они выполняются только *в первый раз*, когда имя модуля встречается в операторе импорта.
 
-Each module has its own private symbol table, which is used as the global symbol table by all functions defined in the module. Thus, the author of a module can use global variables in the module without worrying about accidental clashes with a user’s global variables. On the other hand, if you know what you are doing you can touch a module’s global variables with the same notation used to refer to its functions, `modname.itemname`.
+Каждый модуль имеет свою приватную таблицу символов, которая используется в качестве глобальной таблицы символов всеми функциями, которые определены в модуле. Таким образом, автор модуля может использовать глобальные переменные в модуле, не беспокоясь о случайных столкновениях с глобальными переменными пользователя. С другой стороны, если вы знаете, что делаете, вы можете обратиться к глобальным переменным модуля аналогично тому, как ссылаетесь на его функции, `modname.itemname`.
 
-Modules can import other modules. It is customary but not required to place all [`import`](https://docs.python.org/3/reference/simple_stmts.html#import) statements at the beginning of a module (or script, for that matter). The imported module names are placed in the importing module’s global symbol table.
+Модули могут импортировать другие модули. Обычно, но не обязательно размещать все операторы [`import`](https://docs.python.org/3/reference/simple_stmts.html#import) в начале модуля (или, в данном случае, скрипта). Имена импортированных модулей помещаются в глобальную таблицу символов импортирующего модуля.
 
-There is a variant of the [`import`](https://docs.python.org/3/reference/simple_stmts.html#import) statement that imports names from a module directly into the importing module’s symbol table. For example:
+Существует вариант оператора [`import`](https://docs.python.org/3/reference/simple_stmts.html#import), который импортирует имена из модуля непосредственно в таблицу символов импортирующего модуля. Например:
 
 \>>>
 
@@ -78,9 +76,9 @@ There is a variant of the [`import`](https://docs.python.org/3/reference/simple_
 0 1 1 2 3 5 8 13 21 34 55 89 144 233 377
 ```
 
-This does not introduce the module name from which the imports are taken in the local symbol table (so in the example, `fibo` is not defined).
+Это не помещает имя модуля, из которого импортируются данные, в локальную таблицу символов (поэтому в примере `fibo` не определен).
 
-There is even a variant to import all names that a module defines:
+Существует вариант для импорта всех имен, определенных в модуле:
 
 \>>>
 
@@ -90,11 +88,11 @@ There is even a variant to import all names that a module defines:
 0 1 1 2 3 5 8 13 21 34 55 89 144 233 377
 ```
 
-This imports all names except those beginning with an underscore (`_`). In most cases Python programmers do not use this facility since it introduces an unknown set of names into the interpreter, possibly hiding some things you have already defined.
+Это импортирует все имена, кроме тех, которые начинаются с подчеркивания (`_`). В большинстве случаев программисты Python не используют эту возможность, поскольку она вводит неизвестный набор имен в интерпретатор, возможно, скрывая некоторые имена, которые вы уже определили.
 
-Note that in general the practice of importing `*` from a module or package is frowned upon, since it often causes poorly readable code. However, it is okay to use it to save typing in interactive sessions.
+Обратите внимание, что в целом практика импорта `*` из модуля или пакета не одобряется, так как это часто создает плохо читаемый код.
 
-If the module name is followed by `as`, then the name following `as` is bound directly to the imported module.
+Если за именем модуля следует `as`, то имя, следующее за ` as`, напрямую связано с импортированным модулем.
 
 \>>>
 
@@ -104,9 +102,9 @@ If the module name is followed by `as`, then the name following `as` is bound di
 0 1 1 2 3 5 8 13 21 34 55 89 144 233 377
 ```
 
-This is effectively importing the module in the same way that `import fibo` will do, with the only difference of it being available as `fib`.
+Это импортирует модуль так же, как это делает `import fibo`, с той лишь разницей, что он доступен как `fib`.
 
-It can also be used when utilising [`from`](https://docs.python.org/3/reference/simple_stmts.html#from) with similar effects:
+Его также можно использовать с [`from`](https://docs.python.org/3/reference/simple_stmts.html#from) с тем же эффектом:
 
 \>>>
 
@@ -118,21 +116,17 @@ It can also be used when utilising [`from`](https://docs.python.org/3/reference/
 
 Note
 
- 
+Из соображений эффективности каждый модуль импортируется только один раз за сеанс интерпретатора. Поэтому, если вы меняете свои модули, вы должны перезапустить интерпретатор – или, если это только один модуль, который вы хотите протестировать в интерактивном режиме, используйте [`importlib.reload()`](https://docs.python.org/3/library/importlib.html#importlib.reload), например, `import importlib; importlib.reload(modulename)`.
 
-For efficiency reasons, each module is only imported once per interpreter session. Therefore, if you change your modules, you must restart the interpreter – or, if it’s just one module you want to test interactively, use [`importlib.reload()`](https://docs.python.org/3/library/importlib.html#importlib.reload), e.g. `import importlib; importlib.reload(modulename)`.
+### 2.1.1. Выполнение модулей в виде скриптов
 
-
-
-### 6.1.1. Executing modules as scripts
-
-When you run a Python module with
+Когда вы запускаете модуль Python с
 
 ```
 python fibo.py <arguments>
 ```
 
-the code in the module will be executed, just as if you imported it, but with the `__name__` set to `"__main__"`. That means that by adding this code at the end of your module:
+код в модуле будет выполнен так же, как если бы вы его импортировали, но с  `__name__` определенным как `"__main__"`.
 
 ```
 if __name__ == "__main__":
@@ -140,14 +134,14 @@ if __name__ == "__main__":
     fib(int(sys.argv[1]))
 ```
 
-you can make the file usable as a script as well as an importable module, because the code that parses the command line only runs if the module is executed as the “main” file:
+Вы можете сделать файл доступным для использования в качестве скрипта, а также в качестве импортируемого модуля, потому что код, который анализирует командную строку, запускается, только если модуль выполняется как «основной» файл:
 
 ```
 $ python fibo.py 50
 0 1 1 2 3 5 8 13 21 34
 ```
 
-If the module is imported, the code is not run:
+Если модуль просто импортирован, код не выполнится:
 
 \>>>
 
@@ -156,46 +150,35 @@ If the module is imported, the code is not run:
 >>>
 ```
 
-This is often used either to provide a convenient user interface to a module, or for testing purposes (running the module as a script executes a test suite).
+Это часто используется либо для обеспечения удобного пользовательского интерфейса для модуля, либо для тестирования (запуск модуля в качестве сценария выполняет набор тестов).
 
+### 2.1.2. Путь поиска модулей
 
+Когда импортируется модуль `spam` интерпретатор сначала ищет встроенный модуль с таким именем. Если он не найден, он ищет файл с именем `spam.py` в списке каталогов, заданных переменной [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path). [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path) инициализируется из:
 
-### 6.1.2. The Module Search Path
-
-When a module named `spam` is imported, the interpreter first searches for a built-in module with that name. If not found, it then searches for a file named `spam.py` in a list of directories given by the variable [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path). [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path) is initialized from these locations:
-
-- The directory containing the input script (or the current directory when no file is specified).
-- [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH) (a list of directory names, with the same syntax as the shell variable `PATH`).
-- The installation-dependent default.
+- Каталога, содержащего входной скрипт (или текущего каталога, если файл не указан).
+- [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH) (список имен каталогов, с тем же синтаксисом, что и у переменной оболочки `PATH`).
+- Зависит от установки по умолчанию.
 
 Note
 
- 
+В файловых системах, которые поддерживают символические ссылки, каталог, содержащий входной скрипт, рассчитывается после использования символической ссылки. Другими словами, каталог, содержащий символическую ссылку,  **не** добавляется к пути поиска модуля.
 
-On file systems which support symlinks, the directory containing the input script is calculated after the symlink is followed. In other words the directory containing the symlink is **not** added to the module search path.
+После инициализации программы на Python могут изменять [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path) . Каталог, содержащий выполняемый скрипт, помещается в начало пути поиска, перед стандартным путем к библиотеке. Это означает, что скрипты в этом каталоге будут загружены вместо модулей с теми же именами в каталоге библиотеки. Это ошибка, если замена не предусмотрена. См. Раздел [Standard Modules](https://docs.python.org/3/tutorial/modules.html#tut-standardmodules) для получения дополнительной информации.
 
-After initialization, Python programs can modify [`sys.path`](https://docs.python.org/3/library/sys.html#sys.path). The directory containing the script being run is placed at the beginning of the search path, ahead of the standard library path. This means that scripts in that directory will be loaded instead of modules of the same name in the library directory. This is an error unless the replacement is intended. See section [Standard Modules](https://docs.python.org/3/tutorial/modules.html#tut-standardmodules) for more information.
+### 2.1.3. “Скомпилированные” файлы Python
 
-### 6.1.3. “Compiled” Python files
+Чтобы ускорить загрузку модулей, Python кэширует скомпилированную версию каждого модуля в каталоге `__pycache__` под именем `module.*version*.pyc`, где версия кодирует формат скомпилированного файла; обычно он содержит номер версии Python. Например, в выпуске CPython 3.3 скомпилированная версия spam.py будет кэшироваться как `__pycache__/spam.cpython-33.pyc` . Это соглашение об именах позволяет сосуществовать скомпилированным модулям из разных релизов и разных версий Python.
 
-To speed up loading modules, Python caches the compiled version of each module in the `__pycache__` directory under the name `module.*version*.pyc`, where the version encodes the format of the compiled file; it generally contains the Python version number. For example, in CPython release 3.3 the compiled version of spam.py would be cached as `__pycache__/spam.cpython-33.pyc`. This naming convention allows compiled modules from different releases and different versions of Python to coexist.
-
-Python checks the modification date of the source against the compiled version to see if it’s out of date and needs to be recompiled. This is a completely automatic process. Also, the compiled modules are platform-independent, so the same library can be shared among systems with different architectures.
-
-Python does not check the cache in two circumstances. First, it always recompiles and does not store the result for the module that’s loaded directly from the command line. Second, it does not check the cache if there is no source module. To support a non-source (compiled only) distribution, the compiled module must be in the source directory, and there must not be a source module.
-
-Some tips for experts:
-
-- You can use the [`-O`](https://docs.python.org/3/using/cmdline.html#cmdoption-o) or [`-OO`](https://docs.python.org/3/using/cmdline.html#cmdoption-oo) switches on the Python command to reduce the size of a compiled module. The `-O` switch removes assert statements, the `-OO` switch removes both assert statements and __doc__ strings. Since some programs may rely on having these available, you should only use this option if you know what you’re doing. “Optimized” modules have an `opt-` tag and are usually smaller. Future releases may change the effects of optimization.
-- A program doesn’t run any faster when it is read from a `.pyc` file than when it is read from a `.py` file; the only thing that’s faster about `.pyc` files is the speed with which they are loaded.
-- The module [`compileall`](https://docs.python.org/3/library/compileall.html#module-compileall) can create .pyc files for all modules in a directory.
-- There is more detail on this process, including a flow chart of the decisions, in [**PEP 3147**](https://www.python.org/dev/peps/pep-3147).
+Python проверяет дату модификации источника по скомпилированной версии, чтобы определить, устарела ли она и нуждается ли в перекомпиляции. Это полностью автоматический процесс. Кроме того, скомпилированные модули не зависят от платформы, поэтому одна и та же библиотека может совместно использоваться системами с разными архитектурами.
 
 
 
-## 6.2. Standard Modules
+## 2.2. Стандартные модули
 
-Python comes with a library of standard modules, described in a separate document, the Python Library Reference (“Library Reference” hereafter). Some modules are built into the interpreter; these provide access to operations that are not part of the core of the language but are nevertheless built in, either for efficiency or to provide access to operating system primitives such as system calls. The set of such modules is a configuration option which also depends on the underlying platform. For example, the [`winreg`](https://docs.python.org/3/library/winreg.html#module-winreg) module is only provided on Windows systems. One particular module deserves some attention: [`sys`](https://docs.python.org/3/library/sys.html#module-sys), which is built into every Python interpreter. The variables `sys.ps1` and `sys.ps2` define the strings used as primary and secondary prompts:
+В Python есть библиотека стандартных модулей, описанных в отдельном документе, Справочнике по библиотеке Python» (далее «Справочник по библиотеке»). Некоторые модули встроены в интерпретатор; они обеспечивают доступ к операциям, которые не являются частью ядра языка, но тем не менее являются встроенными, либо для эффективности, либо для обеспечения доступа к примитивам операционной системы, таким как системные вызовы. Набор таких модулей является опцией конфигурации, которая также зависит от базовой платформы. Например, модуль [`winreg`](https://docs.python.org/3/library/winreg.html#module-winreg) предоставляется только в системах Windows.
+
+Особого внимания заслуживает модуль [`sys`](https://docs.python.org/3/library/sys.html#module-sys), который встроен в каждый интерпретатор Python. Переменные `sys.ps1` и ` sys.ps2` определяют строки, используемые в качестве основного и вторичного приглашений:
 
 \>>>
 
@@ -211,9 +194,9 @@ Yuck!
 C>
 ```
 
-These two variables are only defined if the interpreter is in interactive mode.
+Эти две переменные определяются только в интерактивном режиме интерпретатора.
 
-The variable `sys.path` is a list of strings that determines the interpreter’s search path for modules. It is initialized to a default path taken from the environment variable [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH), or from a built-in default if [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH) is not set. You can modify it using standard list operations:
+Переменная `sys.path` представляет собой список строк, который определяет путь поиска интерпретатора для модулей. Он инициализируется путем по умолчанию, взятым из переменной среды  [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH), или из встроенного значения по умолчанию, если [`PYTHONPATH`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH) не задано. Вы можете изменить его, используя стандартные операции со списком:
 
 \>>>
 
@@ -224,9 +207,11 @@ The variable `sys.path` is a list of strings that determines the interpreter’s
 
 
 
-## 6.3. The [`dir()`](https://docs.python.org/3/library/functions.html#dir) Function
+## 2.3. Функция [`dir()`](https://docs.python.org/3/library/functions.html#dir)
 
 The built-in function [`dir()`](https://docs.python.org/3/library/functions.html#dir) is used to find out which names a module defines. It returns a sorted list of strings:
+
+Встроенная функция [`dir()`](https://docs.python.org/3/library/functions.html#dir) используется для определения имен, которые определяются в модуле и возвращает отсортированный список строк:
 
 \>>>
 
@@ -254,7 +239,7 @@ The built-in function [`dir()`](https://docs.python.org/3/library/functions.html
  'thread_info', 'version', 'version_info', 'warnoptions']
 ```
 
-Without arguments, [`dir()`](https://docs.python.org/3/library/functions.html#dir) lists the names you have defined currently:
+Функция [`dir()`](https://docs.python.org/3/library/functions.html#dir) без аргументов возвращает имена, определенные на текущий момент:
 
 \>>>
 
@@ -266,9 +251,9 @@ Without arguments, [`dir()`](https://docs.python.org/3/library/functions.html#di
 ['__builtins__', '__name__', 'a', 'fib', 'fibo', 'sys']
 ```
 
-Note that it lists all types of names: variables, modules, functions, etc.
+Обратите внимание, что перечислены все типы имен: переменные, модули, функции и т. д.
 
-[`dir()`](https://docs.python.org/3/library/functions.html#dir) does not list the names of built-in functions and variables. If you want a list of those, they are defined in the standard module [`builtins`](https://docs.python.org/3/library/builtins.html#module-builtins):
+Однако, список из встроенных функций и переменных определен в стандартном модуле  [`builtins`](https://docs.python.org/3/library/builtins.html#module-builtins):
 
 \>>>
 
@@ -308,16 +293,18 @@ Note that it lists all types of names: variables, modules, functions, etc.
 
 
 
-## 6.4. Packages
+## 2.4. Пакеты
 
-Packages are a way of structuring Python’s module namespace by using “dotted module names”. For example, the module name `A.B` designates a submodule named `B` in a package named `A`. Just like the use of modules saves the authors of different modules from having to worry about each other’s global variable names, the use of dotted module names saves the authors of multi-module packages like NumPy or Pillow from having to worry about each other’s module names.
+Пакеты - это способ структурировать пространство имен модулей Python с помощью «точечных имен модулей». Например, имя модуля `A.B` обозначает подмодуль с именем ` B` в пакете с именем `A`. Точно так же, как использование модулей избавляет авторов различных модулей от необходимости беспокоиться о именах глобальных переменных друг друга, использование точечных имен модулей избавляет авторов многомодульных пакетов, таких как NumPy или Pillow, от необходимости беспокоиться об именах модулей друг друга.
 
 Suppose you want to design a collection of modules (a “package”) for the uniform handling of sound files and sound data. There are many different sound file formats (usually recognized by their extension, for example: `.wav`, `.aiff`, `.au`), so you may need to create and maintain a growing collection of modules for the conversion between the various file formats. There are also many different operations you might want to perform on sound data (such as mixing, adding echo, applying an equalizer function, creating an artificial stereo effect), so in addition you will be writing a never-ending stream of modules to perform these operations. Here’s a possible structure for your package (expressed in terms of a hierarchical filesystem):
 
+Предположим, вы хотите создать набор модулей («пакет») для унифицированной обработки звуковых файлов и звуковых данных. Существует много различных форматов звуковых файлов (обычно распознаваемых по их расширению, например: `.wav`, ` .aiff`,  `.au`), поэтому может потребоваться создать и поддерживать растущую коллекцию модулей для преобразования между различными форматами файлов. Есть также много различных операций, которые вы можете выполнять над звуковыми данными (например, микширование, добавление эха, применение функции эквалайзера, создание искусственного стереоэффекта), поэтому, кроме того, вы будете писать бесконечный поток модулей для выполнения этих операций. Вот возможная структура вашего пакета (выраженная в терминах иерархической файловой системы):
+
 ```
-sound/                          Top-level package
-      __init__.py               Initialize the sound package
-      formats/                  Subpackage for file format conversions
+sound/                         Пакет верхнего уровня
+      __init__.py              Инициализация звукового пакета
+      formats/                 Подпакет для преобразований форматов файлов
               __init__.py
               wavread.py
               wavwrite.py
@@ -326,13 +313,13 @@ sound/                          Top-level package
               auread.py
               auwrite.py
               ...
-      effects/                  Subpackage for sound effects
+      effects/                 Подпакет для звуковых эффектов
               __init__.py
               echo.py
               surround.py
               reverse.py
               ...
-      filters/                  Subpackage for filters
+      filters/                 Подпакет для фильтров
               __init__.py
               equalizer.py
               vocoder.py
@@ -340,35 +327,35 @@ sound/                          Top-level package
               ...
 ```
 
-When importing the package, Python searches through the directories on `sys.path` looking for the package subdirectory.
+При импорте пакета Python просматривает каталоги в `sys.path` в поисках подкаталога пакета.
 
-The `__init__.py` files are required to make Python treat directories containing the file as packages. This prevents directories with a common name, such as `string`, unintentionally hiding valid modules that occur later on the module search path. In the simplest case, `__init__.py` can just be an empty file, but it can also execute initialization code for the package or set the `__all__` variable, described later.
+Файлы `__init __.py` необходимы, чтобы Python рассматривал каталоги, содержащие файл, как пакеты. Это не допускает каталоги с общим именем, такие как `string`, непреднамеренно скрывая допустимые модули, которые появляются позже в пути поиска модулей. В простейшем случае `__init __.py` может быть пустым файлом, но он также может выполнить код инициализации для пакета или установить переменную ` __all__`, как описано ниже.
 
-Users of the package can import individual modules from the package, for example:
+Пользователи пакета могут импортировать отдельные модули из пакета, например:
 
 ```
 import sound.effects.echo
 ```
 
-This loads the submodule `sound.effects.echo`. It must be referenced with its full name.
+Это загружает подмодуль `sound.effects.echo`. На него должно быть указано полное имя.
 
 ```
 sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
 ```
 
-An alternative way of importing the submodule is:
+Альтернативный способ импорта подмодуля:
 
 ```
 from sound.effects import echo
 ```
 
-This also loads the submodule `echo`, and makes it available without its package prefix, so it can be used as follows:
+Это также загружает подмодуль `echo` и делает его доступным без префикса пакета, поэтому его можно использовать следующим образом:
 
 ```
 echo.echofilter(input, output, delay=0.7, atten=4)
 ```
 
-Yet another variation is to import the desired function or variable directly:
+Еще один вариант - импортировать нужную функцию или переменную напрямую:
 
 ```
 from sound.effects.echo import echofilter
@@ -376,21 +363,23 @@ from sound.effects.echo import echofilter
 
 Again, this loads the submodule `echo`, but this makes its function `echofilter()` directly available:
 
+Опять же, это загружает подмодуль `echo`, но это делает его функцию ` echofilter() ` доступной непосредственно:
+
 ```
 echofilter(input, output, delay=0.7, atten=4)
 ```
 
-Note that when using `from package import item`, the item can be either a submodule (or subpackage) of the package, or some other name defined in the package, like a function, class or variable. The `import` statement first tests whether the item is defined in the package; if not, it assumes it is a module and attempts to load it. If it fails to find it, an [`ImportError`](https://docs.python.org/3/library/exceptions.html#ImportError) exception is raised.
+Обратите внимание, что при использовании `from package import item`, элемент может быть либо подмодулем (или подпакетом) пакета, либо каким-либо другим именем, определенным в пакете, например функцией, классом или переменной. Оператор `import` сначала проверяет, определен ли элемент в пакете; если нет, он предполагает, что это модуль и пытается загрузить его. Если он не может его найти, возникает исключение [`ImportError`](https://docs.python.org/3/library/exceptions.html#ImportError).
 
-Contrarily, when using syntax like `import item.subitem.subsubitem`, each item except for the last must be a package; the last item can be a module or a package but can’t be a class or function or variable defined in the previous item.
+Наоборот, при использовании синтаксиса, такого как `import item.subitem.subsubitem`, каждый элемент, кроме последнего, должен быть пакетом; последний элемент может быть модулем или пакетом, но не может быть классом, функцией или переменной, определенной в предыдущем элементе.
 
+### 2.4.1. Импорт * из пакета
 
-
-### 6.4.1. Importing * From a Package
-
-Now what happens when the user writes `from sound.effects import *`? Ideally, one would hope that this somehow goes out to the filesystem, finds which submodules are present in the package, and imports them all. This could take a long time and importing sub-modules might have unwanted side-effects that should only happen when the sub-module is explicitly imported.
+Что происходит, когда пользователь пишет `from sound.effects import *`? В идеале можно надеяться, что это каким-то образом позволит перейти в файловую систему, найти, какие подмодули присутствуют в пакете, и импортировать их все. Это может занять много времени, и импорт подмодулей может иметь нежелательные побочные эффекты, которые должны происходить, только если подмодуль явно импортирован.
 
 The only solution is for the package author to provide an explicit index of the package. The [`import`](https://docs.python.org/3/reference/simple_stmts.html#import) statement uses the following convention: if a package’s `__init__.py` code defines a list named `__all__`, it is taken to be the list of module names that should be imported when `from package import *` is encountered. It is up to the package author to keep this list up-to-date when a new version of the package is released. Package authors may also decide not to support it, if they don’t see a use for importing * from their package. For example, the file `sound/effects/__init__.py` could contain the following code:
+
+Единственное решение для автора пакета - предоставить явный индекс пакета. Оператор [`import`](https://docs.python.org/3/reference/simple_stmts.html#import) использует следующее соглашение: если код пакета `__init__.py` определяет список с именем ` __all__`, он считается списком имен модулей, которые должны быть импортированы при использовании `from package import *`. Автор пакета должен поддерживать этот список в актуальном состоянии, когда выходит новая версия пакета. Авторы пакета могут также принять решение не поддерживать его, если они не видят смысла в импорте * из своего пакета. Например, файл `sound/effects/__init__.py` может содержать следующий код:
 
 ```
 __all__ = ["echo", "surround", "reverse"]
@@ -398,7 +387,11 @@ __all__ = ["echo", "surround", "reverse"]
 
 This would mean that `from sound.effects import *` would import the three named submodules of the `sound` package.
 
+Это означает, что `from sound.effects import *` будет импортировать три подмодуля пакета `sound`.
+
 If `__all__` is not defined, the statement `from sound.effects import *` does *not* import all submodules from the package `sound.effects` into the current namespace; it only ensures that the package `sound.effects` has been imported (possibly running any initialization code in `__init__.py`) and then imports whatever names are defined in the package. This includes any names defined (and submodules explicitly loaded) by `__init__.py`. It also includes any submodules of the package that were explicitly loaded by previous [`import`](https://docs.python.org/3/reference/simple_stmts.html#import) statements. Consider this code:
+
+Если `__all__` не определено, оператор ` from sound.effects import * `  *не* импортирует все подмодули из пакета ` sound.effects` в текущее пространство имен; он только гарантирует, что пакет `sound.effects` был импортирован, а затем импортирует все имена, определенные в пакете. Это включает любые имена, определенные (и явно загруженные подмодули) с помощью `__init__.py`. Он также включает любые подмодули пакета, которые были явно загружены предыдущими операторами [`import`](https://docs.python.org/3/reference/simple_stmts.html#import). Рассмотрим этот код:
 
 ```
 import sound.effects.echo
@@ -406,17 +399,19 @@ import sound.effects.surround
 from sound.effects import *
 ```
 
-In this example, the `echo` and `surround` modules are imported in the current namespace because they are defined in the `sound.effects` package when the `from...import` statement is executed. (This also works when `__all__` is defined.)
+В этом примере модули `echo` и `round` импортируются в текущее пространство имен, потому что они определены в пакете` sound.effects` при выполнении оператора `from ... import`. (Это также работает, когда определено `__all__`.)
 
-Although certain modules are designed to export only names that follow certain patterns when you use `import *`, it is still considered bad practice in production code.
+Хотя некоторые модули предназначены для экспорта только имен, которые следуют определенным шаблонам, когда вы используете `import *`, в производственном коде это все еще считается плохой практикой.
 
-Remember, there is nothing wrong with using `from package import specific_submodule`! In fact, this is the recommended notation unless the importing module needs to use submodules with the same name from different packages.
+Помните, что нет ничего плохого в использовании `from package import specific_submodule`! Фактически, это рекомендуемая запись, если импортирующему модулю не нужно использовать подмодули с одинаковыми именами из разных пакетов.
 
-### 6.4.2. Intra-package References
+### 2.4.2. Внутрипакетные ссылки
 
 When packages are structured into subpackages (as with the `sound` package in the example), you can use absolute imports to refer to submodules of siblings packages. For example, if the module `sound.filters.vocoder` needs to use the `echo` module in the `sound.effects` package, it can use `from sound.effects import echo`.
 
-You can also write relative imports, with the `from module import name` form of import statement. These imports use leading dots to indicate the current and parent packages involved in the relative import. From the `surround` module for example, you might use:
+Когда пакеты структурированы в подпакеты (как в примере с `sound`), можно использовать абсолютное импортирование для ссылки на пакеты-потомки. Например, если модуль `sound.filters.vocoder` должен использовать модуль ` echo` в пакете `sound.effects`, он может использовать ` from sound.effects import echo`.
+
+Также можно использовать относительное импортирование, используя форму `from module import name`. В этих импортах используются символы точек для указания текущих и родительских пакетов, участвующих в относительном импорте. Например, для модуля `round` вы можете использовать:
 
 ```
 from . import echo
@@ -426,17 +421,17 @@ from ..filters import equalizer
 
 Note that relative imports are based on the name of the current module. Since the name of the main module is always `"__main__"`, modules intended for use as the main module of a Python application must always use absolute imports.
 
-### 6.4.3. Packages in Multiple Directories
+Обратите внимание, что относительное импортирование основано на имени текущего модуля. Поскольку имя основного модуля всегда `"__main__"`, модули, предназначенные для использования в качестве основного модуля приложения Python, всегда должны использовать абсолютный импорт.
 
-Packages support one more special attribute, [`__path__`](https://docs.python.org/3/reference/import.html#__path__). This is initialized to be a list containing the name of the directory holding the package’s `__init__.py` before the code in that file is executed. This variable can be modified; doing so affects future searches for modules and subpackages contained in the package.
+### 2.4.3. Пакеты в нескольких каталогах
 
-While this feature is not often needed, it can be used to extend the set of modules found in a package.
+Пакеты поддерживают еще один специальный атрибут, [`__path__`](https://docs.python.org/3/reference/import.html#__path__). Он инициализируется как список, содержащий имя каталога, в котором содержится `__init__.py` пакета перед выполнением кода в этом файле. Эта переменная может быть изменена; это влияет на последующий поиск модулей и подпакетов, содержащихся в пакете.
 
+Хотя эта функция не требуется часто, ее можно использовать для расширения набора модулей, находящихся в пакете.
 
+## Математика
 
-## Mathematics
-
-The [`math`](https://docs.python.org/3/library/math.html#module-math) module gives access to the underlying C library functions for floating point math:
+Модуль [`math`](https://docs.python.org/3/library/math.html#module-math) предоставляет доступ к базовым функциям библиотеки C для математики с плавающей точкой:
 
 \>>>
 
@@ -448,7 +443,7 @@ The [`math`](https://docs.python.org/3/library/math.html#module-math) module giv
 10.0
 ```
 
-The [`random`](https://docs.python.org/3/library/random.html#module-random) module provides tools for making random selections:
+Модуль [`random`](https://docs.python.org/3/library/random.html#module-random) предоставляет инструменты для случайного выбора:
 
 \>>>
 
@@ -466,6 +461,8 @@ The [`random`](https://docs.python.org/3/library/random.html#module-random) modu
 
 The [`statistics`](https://docs.python.org/3/library/statistics.html#module-statistics) module calculates basic statistical properties (the mean, median, variance, etc.) of numeric data:
 
+Модуль [`statistics`](https://docs.python.org/3/library/statistics.html#module-statistics) вычисляет основные статистические свойства (среднее значение, медиана, дисперсия и т. д.) числовых данных:
+
 \>>>
 
 ```
@@ -479,4 +476,4 @@ The [`statistics`](https://docs.python.org/3/library/statistics.html#module-stat
 1.3720238095238095
 ```
 
-The SciPy project <[https://scipy.org](https://scipy.org/)> has many other modules for numerical computations.
+В библиотеке [SciPy](https://scipy.org/) есть множество других модулей для численных расчетов.
